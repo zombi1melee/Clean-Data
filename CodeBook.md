@@ -1,9 +1,4 @@
----
-title: "Data Dictionary"
-author: "Charles Hale"
-date: "Jan 20, 2015"
-output: html_document
----
+#Codebook
 
 Data variables derived from <http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones> based on experiments carried out using 30 volunteers, ranging in ages of 19 to 48.  Each person performed the following six activities wearing a smart phone where measurements were taken to capture 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz.
 
@@ -18,10 +13,12 @@ Each record of the dataset consist of its triaxial acceleration, triaxial angula
 
 ##Methodology
 Functions consisting of `fread` and `matrix` are used to read in the data files as numerical and character variables.  After the data files are read into variables, the class labels are linked to activity names and the test labels are recoded.  Processes are used to change the activity names and recode the test and training labels to match their respected class.  Column names are also given descriptive names.  Two separate datasets are developed, where each dataset included numerical data, recoded names and subject data.  The datasets are then combined by row into a complete dataset using a wide format. 
+
 ```{r}
 # wide format HAR data set
 har <- rbind(test_dataset, train_dataset)
 ```
+
 ```{r}
 # number or rows and columns
 dim(har)
@@ -29,7 +26,7 @@ dim(har)
 str(har)
 tbl_df(har[1:10, 1:10, with = FALSE])
 ```
-###Transformations
+##Transformations
 Changes to the original data include:
 
 - The activity names changed to stroll, incline walking, decline walking, seated, erect, and rest.
@@ -38,7 +35,7 @@ Changes to the original data include:
 - Removed "()", replaced "," with "-", used lower case letters in column names, and removed duplicate column names.  
 - Created a dataset with averages of variables for each activity and subject and composed of different views of the dataset.
 
-###Conclusion
+##Conclusion
 Calculate the average of each variable for each activity and each subject.
 
 ```{r}

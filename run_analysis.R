@@ -1,5 +1,3 @@
-# Charles Hale
-# January 24, 2015
 # Getting and cleaning data project: Coursera  
 
 # instead of displaying all digits, display 5 digits
