@@ -19,11 +19,14 @@ if(!file.exists("data")) {
 
 dest_file <- "./data/HARdatset.zip"
 date_downloaded <- NULL
+file_URL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 # get data
 if(!file.exists(dest_file)) {
-  file_URL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip "
-  download.file(file_URL, destfile = "./data/HARdatset.zip", method = "curl")
+  download.file(file_URL, destfile = dest_file, method = "curl")
   (date_downloaded <- date())
+}
+if(file.exists(dest_file)) {
+  unzip(zipfile = dest_file, exdir = path.expand("./data"))
 }
 ```
 When `run_analysis.R` is sourced, message text is printed in the console.  The messages note, if applicable, downloading, and reading of the data files.   The script will also pause to review the combined training and test datasets, named har dataset.  `Press return to continue` will complete the run.
