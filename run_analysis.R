@@ -3,7 +3,9 @@
 # instead of displaying all digits, display 5 digits
 options(digits = 5) 
 
+# data manipulation 
 library("dplyr")
+# data storage
 library("data.table")
 
 #################################################################
@@ -63,11 +65,11 @@ relabel <- function(features) {
 # check if all data are numerical
 check_numeric <- function(x) {
   if(all(unlist(lapply(x, is.numeric)))) {
-    cat(x, "contains all numerical data.\n")
+    cat("Data contains all numerical data.\n")
    # return(TRUE)
   }
   else {
-    warning(x, "may not contain all numerical data.\n")
+    warning("Data may not contain all numerical data.\n")
   # return(FALSE) 
   }
 }
@@ -96,6 +98,7 @@ activity_labels$activity <- as.character(activity_labels$activity)
 # recoded activity names for test and training sets to match class
 recode_test <- test_label()
 setnames(recode_test,1, "class") 
+recode_test$class <- as.character(recode_test$class)
 recode_test <- within(recode_test, {
   activity <- NA
   activity[class == 1]  <- activity_labels[1, activity]
@@ -133,9 +136,10 @@ colnames(subjecttrain_mx) <- "subject"
 # merge training and test sets
 test_dataset <- cbind(recode_test, subjecttest_mx, testset_mx)
 train_dataset <- cbind(recode_train, subjecttrain_mx, trainset_mx)
-# just checking if all data is numeric
-check_numeric(test_dataset[,-c(1,2,3)])
-check_numeric(train_dataset[,-c(1,2,3)])
+# just checking if all data is numeric 
+coln_nums <- 4:564
+check_numeric(test_dataset[ ,coln_nums, with = FALSE])
+check_numeric(train_dataset[ ,coln_nums, with = FALSE])
 
 # wide format HAR data set
 har <- rbind(test_dataset, train_dataset)
@@ -144,10 +148,12 @@ har$subject <- as.character(har$subject)
 # looking for NAs and NaNs
 har[!complete.cases(har),]
 # structure of har
+tables()
 str(har)
 dim(har)
+sapply(har, class)
 cat(sprintf("Merged training and test datasets\n"))
-print(tbl_df(har[1:10, 1:10, with = FALSE]))
+print(har[1:10, 1:10, with = FALSE])
 pause <- readline("Press Return to Continue.")
 
 #################################################################
@@ -169,6 +175,7 @@ dataset_mmt[1:10, 1:10]
 
 #################################################################
 # average of each variable for each activity and subject dataset
+# split data by activity and subject
 avg_subject <- dataset_mmt %>% group_by(subject, activity) %>% summarise_each(funs(mean))
 avg_subject[1:10, 1:10]
 # sample of rows
