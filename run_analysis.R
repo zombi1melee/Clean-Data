@@ -1,5 +1,3 @@
-# Getting and cleaning data project: Coursera  
-
 # instead of displaying all digits, display 5 digits
 options(digits = 5) 
 
@@ -40,7 +38,7 @@ load_dataset <- function(input, ...) {
   }
 }
 
-activity_label <-  load_dataset(input = "./data/UCI HAR Dataset/activity_labels.txt", 
+activity_label <- load_dataset(input = "./data/UCI HAR Dataset/activity_labels.txt", 
                                 stringsAsFactors = FALSE)
 
 test_label <- load_dataset(input = "./data/UCI HAR Dataset/test/y_test.txt", 
